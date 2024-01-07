@@ -5,6 +5,7 @@ import { collection , doc , getDoc ,getDocs , query , where , getDocFromCache , 
 } from "firebase/firestore" ;
 import { firestore_db } from "@/firebase" ;
 
+import { Button } from "@/components/ui/button" ;
 
 
 // 單個文件
@@ -29,24 +30,17 @@ const get_Doc = async() => {
 } ;
 
 
-
-
 export default function Home(){
 
   return (
-          <>
-
-            <p> Firebase 託管 2024.01.07 </p>
-
-            <div>
-
-                 <button onClick = { get_Doc } className = "m-5 p-4 bg-slate-600/10" > get_Doc( )  </button>
+            <div className = "p-5" >
 
 
-
+              <Button variant = { 'outline' }  onClick = { get_Doc } > 
+                        取得文件    
+              </Button>
+              
             </div>
-            
-          </>
 
          )
 
