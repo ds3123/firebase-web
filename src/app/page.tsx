@@ -1,10 +1,9 @@
 
 "use client"
-import { collection , doc , getDoc ,getDocs , query , where , getDocFromCache , or , startAt , endAt , orderBy  
-  , onSnapshot , collectionGroup , getCountFromServer , getAggregateFromServer , sum , average , count
+import { collection , doc , getDoc , getDocs , query , where , getDocFromCache , or , startAt , endAt , orderBy  
+         , onSnapshot , collectionGroup , getCountFromServer , getAggregateFromServer , sum , average , count
 } from "firebase/firestore" ;
 import { firestore_db } from "@/firebase" ;
-
 import { Button } from "@/components/ui/button" ;
 
 
@@ -33,12 +32,14 @@ const get_Doc = async() => {
 export default function Home(){
 
   return (
+    
             <div className = "p-5" >
 
+               <Button variant = { 'outline' }  onClick = { get_Doc } > 
 
-              <Button variant = { 'outline' }  onClick = { get_Doc } > 
-                        取得文件    
-              </Button>
+                    取得文件    
+                  
+               </Button>
               
             </div>
 
