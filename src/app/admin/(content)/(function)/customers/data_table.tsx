@@ -61,36 +61,36 @@ export function DataTable< TData , TValue >( { columns, data } : DataTableProps<
     const [ rowSelection , setRowSelection ]         = useState( {} ) ;
 
 
-  const table = useReactTable({
-                                data ,
-                                columns ,
-                                getCoreRowModel          : getCoreRowModel() ,
+    const table = useReactTable({
+                                    data ,
+                                    columns ,
+                                    getCoreRowModel          : getCoreRowModel() ,
 
-                                // 分頁
-                                getPaginationRowModel    : getPaginationRowModel() ,
+                                    // 分頁
+                                    getPaginationRowModel    : getPaginationRowModel() ,
 
-                                // 排序
-                                onSortingChange          : setSorting ,
-                                getSortedRowModel        : getSortedRowModel() ,
+                                    // 排序
+                                    onSortingChange          : setSorting ,
+                                    getSortedRowModel        : getSortedRowModel() ,
 
-                                // 篩選
-                                onColumnFiltersChange    : setColumnFilters ,
-                                getFilteredRowModel      : getFilteredRowModel() ,
+                                    // 篩選
+                                    onColumnFiltersChange    : setColumnFilters ,
+                                    getFilteredRowModel      : getFilteredRowModel() ,
 
-                                // 顯示欄位  
-                                onColumnVisibilityChange : setColumnVisibility ,
+                                    // 顯示欄位  
+                                    onColumnVisibilityChange : setColumnVisibility ,
 
-                                // 選擇列
-                                onRowSelectionChange     : setRowSelection ,
+                                    // 選擇列
+                                    onRowSelectionChange     : setRowSelection ,
 
-                                // 各種 state
-                                state                    : {
-                                                             sorting ,          // 排序
-                                                             columnFilters ,    // 篩選
-                                                             columnVisibility , // 顯示欄位
-                                                             rowSelection ,     // 選擇列
-                                                           }
-                              }) ;
+                                    // 各種 state
+                                    state                    : {
+                                                                sorting ,          // 排序
+                                                                columnFilters ,    // 篩選
+                                                                columnVisibility , // 顯示欄位
+                                                                rowSelection ,     // 選擇列
+                                                            }
+                                }) ;
 
 
   return <>
@@ -146,21 +146,22 @@ export function DataTable< TData , TValue >( { columns, data } : DataTableProps<
 
                     <TableHeader>
 
-                        { table.getHeaderGroups().map((headerGroup) => (
+                        { table.getHeaderGroups().map(( headerGroup ) => (
 
-                            <TableRow key={headerGroup.id}>
+                            <TableRow key={ headerGroup.id }>
 
                                 { headerGroup.headers.map((header) => {
-                                    return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                            )}
-                                    </TableHead>
-                                    )
+
+                                    return <TableHead key = { header.id } >
+                                              { header.isPlaceholder ? 
+                                                  null
+                                                : flexRender(
+                                                                header.column.columnDef.header,
+                                                                header.getContext()
+                                                            )
+                                               }
+                                            </TableHead>
+                                
                                 })}
 
                             </TableRow>
@@ -189,8 +190,12 @@ export function DataTable< TData , TValue >( { columns, data } : DataTableProps<
 
                         ) : (
                                 <TableRow>
-                                    <TableCell colSpan={columns.length} className="h-24 text-center">
-                                        No results.
+                                    <TableCell colSpan = { columns.length} className = "h-24 text-center">
+                                        
+                                        <span className = "p-3 bg-red-600 text-white rounded-lg" >
+                                             尚未新增資料
+                                        </span>
+
                                     </TableCell>
                                 </TableRow>
                             )}
@@ -201,7 +206,7 @@ export function DataTable< TData , TValue >( { columns, data } : DataTableProps<
 
             </div>
 
-           { /* 前後頁 */ }
+            { /* 前後頁 */ }
             <div className="flex items-center justify-end space-x-2 py-4">
 
                     <Button variant = "outline" 
@@ -217,8 +222,7 @@ export function DataTable< TData , TValue >( { columns, data } : DataTableProps<
                         下一頁  
                     </Button>
 
-              </div>
-  
+            </div>
   
         </>
   
