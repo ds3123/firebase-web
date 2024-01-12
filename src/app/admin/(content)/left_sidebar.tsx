@@ -85,6 +85,13 @@ export function Left_SideBar(){
                     </div>
                 </Link> 
 
+                { /* 管理 */ }
+                  <Link href = '/admin/management' > 
+                     <div className = { `${ is_On( '/admin/management' , path ) }` } > 
+                        <FiSettings size = { 18 } />
+                     </div>
+                  </Link>
+
              </div>
                             
            </div>  
