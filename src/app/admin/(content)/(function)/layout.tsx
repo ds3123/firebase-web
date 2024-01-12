@@ -12,7 +12,7 @@ const Functions_Layout = ( { children } : { children: React.ReactNode } ) => {
               </div>
 
               <div className = "main_section" >
-            
+
                  { children }
             
               </div>

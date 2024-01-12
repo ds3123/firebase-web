@@ -13,7 +13,7 @@ const Management_Layout = ( { children } : { children: React.ReactNode } ) => {
 
              </div>
 
-             <div className = "main_section"  >
+             <div className = "main_section" >
 
                 { children }
 

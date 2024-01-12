@@ -1,4 +1,4 @@
-import { Payment , columns } from "@/components/layout/table/customers_table_columns"
+import { Payment , columns } from "@/components/layout/table/customers_columns"
 import { RightSheet } from "@layout/panel/right_sheet"
 import { PaymentForm_Create } from "@/components/layout/form/customers/customers_form_create"
 import { DataTable } from "@/components/ui/data-table"
@@ -98,7 +98,7 @@ export default async function Customers_Page(){
   return <>
             
             <div className = "text-right" >
-                <RightSheet title = "新增付款" component = { <PaymentForm_Create /> } />
+                <RightSheet title = "新增客戶" component = { <PaymentForm_Create /> } />
             </div>
            
             <DataTable columns = { columns } data = { data } filter = { [ "status" , "email" ] }  /> 

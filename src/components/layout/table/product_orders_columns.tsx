@@ -1,10 +1,11 @@
 
 
+
 "use client"
 import { ColumnDef } from "@tanstack/react-table" 
 
 
-export type Payment  = {
+export type ProductOrders  = {
 
     id     : string
     amount : number
@@ -16,7 +17,7 @@ export type Payment  = {
 
 
 // # 欄位定義
-export const columns : ColumnDef< Payment >[] = [
+export const columns : ColumnDef< ProductOrders >[] = [
 
     {
       accessorKey : "serial" ,
@@ -24,6 +25,4 @@ export const columns : ColumnDef< Payment >[] = [
       cell        : "343"
     }
 
-      
-    
 ] ;

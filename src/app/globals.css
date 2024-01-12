@@ -7,7 +7,9 @@
 
     .nav_section{ @apply px-6 py-8 border-b-[1px] }
   
-    .main_section{ @apply container py-10 space-y-8 }
+    .main_section{ @apply container py-8 space-y-6 }
+
+    .label{ @apply border-l-8 border-indigo-500/100 px-2 }
     
 }
  

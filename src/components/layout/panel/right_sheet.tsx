@@ -27,7 +27,7 @@ export function RightSheet( { title , component } : Sheet ) : JSX.Element {
             { /* 面板內容 */ }
             <SheetContent className = "sm:max-w-[1000px] space-y-8">
 
-                <SheetTitle className = "border-l-8 border-indigo-500/100 px-2" > { title }  </SheetTitle>
+                <SheetTitle className = "label" > { title }  </SheetTitle>
 
                 { /* 元件內容 */ }
                 { component }

@@ -8,7 +8,7 @@ export default async function Management_Page(){
 
   return <>
 
-            管理頁
+             <div className = "label" > 管理區首頁 </div>
 
          </>
   
