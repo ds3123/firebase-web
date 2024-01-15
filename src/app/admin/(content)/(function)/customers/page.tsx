@@ -1,107 +1,29 @@
-import { Payment , columns } from "@/components/layout/table/customers_columns"
-import { RightSheet } from "@layout/panel/right_sheet"
-import { PaymentForm_Create } from "@/components/layout/form/customers/customers_form_create"
+
+"use client"
+import { columns } from "@/components/layout/table/customers_columns"
+import { RightSheet_Create } from "@/components/layout/panel/right_sheet_create"
+import { Customers_Form } from "@/components/layout/form/customers/customers_form"
 import { DataTable } from "@/components/ui/data-table"
-
-
-async function getData() : Promise< Payment[] > {
-  
-  // Fetch data from your API here.
-  return [
-            {
-              id: "728ed52f",
-              amount: 100,
-              status: "pending",
-              email: "m@example.com",
-            },
-            {
-              id: "489e1d42",
-              amount: 125,
-              status: "processing",
-              email: "ds312306@gmail.com",
-            },
-            {
-              id: "728ed52f",
-              amount: 100,
-              status: "pending",
-              email: "m@example.com",
-            },
-            {
-              id: "489e1d42",
-              amount: 125,
-              status: "processing",
-              email: "example@gmail.com",
-            },
-            {
-              id: "728ed52f",
-              amount: 100,
-              status: "pending",
-              email: "m@example.com",
-            },
-            {
-              id: "489e1d42",
-              amount: 125,
-              status: "processing",
-              email: "example@gmail.com",
-            },
-            {
-              id: "728ed52f",
-              amount: 100,
-              status: "pending",
-              email: "m@example.com",
-            },
-            {
-              id: "489e1d42",
-              amount: 125,
-              status: "processing",
-              email: "example@gmail.com",
-            },
-            {
-              id: "728ed52f",
-              amount: 100,
-              status: "pending",
-              email: "m@example.com",
-            },
-            {
-              id: "489e1d42",
-              amount: 125,
-              status: "processing",
-              email: "example@gmail.com",
-            },
-            {
-              id: "728ed52f",
-              amount: 100,
-              status: "pending",
-              email: "m@example.com",
-            },
-            {
-              id: "489e1d42",
-              amount: 125,
-              status: "processing",
-              email: "example@gmail.com",
-            }
-          
-
-         ]
-
-}
-
+import { useEffect_Listen_Customers_Collection } from "@/hooks/customers/useEffect_Listen_Customers_Collection"
+import { create_Single_Customer } from "@/api/customers/create_customers"
 
 // # 客戶頁
-export default async function Customers_Page(){
+export default function Customers_Page(){
 
-
-  // 取得資料
-  const data = await getData() ;
+   
+  // 監聽 ( 取得 ) _ customers collection 資料
+  const customers = useEffect_Listen_Customers_Collection() ;
 
   
   return <>
             
             <div className = "text-right" >
-                <RightSheet title = "新增客戶" component = { <PaymentForm_Create /> } />
-            </div>
+                <RightSheet_Create button_title = "新增客戶" 
+                                   sheet_title  = "新增客戶" 
+                                   component    = { <Customers_Form edit_func = { ( data ) => create_Single_Customer( data ) } /> } />
+            </div> 
            
-            <DataTable columns = { columns } data = { data } filter = { [ "status" , "email" ] }  /> 
+            <DataTable columns = { columns } data = { customers } filter = { [ "customer_name" ] }  />
 
          </>
   

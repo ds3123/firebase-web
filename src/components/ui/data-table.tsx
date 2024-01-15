@@ -30,7 +30,7 @@ interface DataTableProps< TData , TValue > {
 
   columns   : ColumnDef< TData , TValue >[] ;
   data      : TData[] ;
-  filter    : string[] ;
+  filter?    : string[] ;
 
 }
 
@@ -65,28 +65,25 @@ export function DataTable< TData , TValue >( { columns , data , filter } : DataT
                 <DropdownMenu>
 
                     <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="ml-auto">
-                        Columns
-                        </Button>
+                       <Button variant = "outline" className="ml-auto">
+                           Columns
+                       </Button>
                     </DropdownMenuTrigger>
                     
-                    <DropdownMenuContent align="end">
-                        {table
+                    <DropdownMenuContent align = "end" >
+                      { table
                         .getAllColumns()
                         .filter(
-                            (column) => column.getCanHide()
+                            ( column ) => column.getCanHide()
                         )
-                        .map((column) => {
+                        .map( (column ) => {
                             return (
                             <DropdownMenuCheckboxItem
-                                key={column.id}
-                                className="capitalize"
-                                checked={column.getIsVisible()}
-                                onCheckedChange={(value) =>
-                                column.toggleVisibility(!!value)
-                                }
-                            >
-                                {column.id}
+                                key             = {column.id}
+                                className       = "capitalize"
+                                checked         = {column.getIsVisible()}
+                                onCheckedChange = { ( value ) =>column.toggleVisibility(!!value) } >
+                                { column.id }
                             </DropdownMenuCheckboxItem>
                             )
                         })}
@@ -97,7 +94,7 @@ export function DataTable< TData , TValue >( { columns , data , filter } : DataT
             </div>
 
             { /* 資料表格 */ }
-            <div className = "rounded-md border">
+            <div>
 
                 <Table>
 

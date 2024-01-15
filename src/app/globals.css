@@ -10,6 +10,9 @@
     .main_section{ @apply container py-8 space-y-6 }
 
     .label{ @apply border-l-8 border-indigo-500/100 px-2 }
+
+    .required{ @apply absolute -top-2 -left-2 text-red-600 font-extrabold }
+
     
 }
  

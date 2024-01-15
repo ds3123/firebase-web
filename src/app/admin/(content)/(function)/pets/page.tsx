@@ -28,7 +28,7 @@ export default async function Pets_Page(){
 
   return <>
 
-            <DataTable columns = { columns } data = { data } filter = { [ "serial" ] }  /> 
+            <DataTable columns = { columns } data = { data } filter = { [ "" ] }  /> 
 
          </>
   
