@@ -1,6 +1,8 @@
 
 import { doc , deleteDoc } from "firebase/firestore" 
 import { firestore_db } from "@/firebase" 
+import { toast } from "sonner"
+
 
 
 
@@ -11,12 +13,12 @@ export const delete_Single_Customer = async( id : string ) => {
 
         await deleteDoc( doc( firestore_db , "customers" , id ) ) ;
 
-        alert( "客戶刪除成功" ) ;
+        toast( "客戶刪除成功" ) ;
 
 
     }catch( err ){
 
-        alert( `刪除客戶失敗 : ${ err }` ) ;
+        toast( `刪除客戶失敗 : ${ err }` ) ;
 
     }
 

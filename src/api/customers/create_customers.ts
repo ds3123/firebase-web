@@ -1,7 +1,8 @@
 
 
-import { collection , addDoc } from "firebase/firestore" 
+import { collection , addDoc , serverTimestamp } from "firebase/firestore" 
 import { firestore_db } from "@/firebase" 
+import { toast } from "sonner"
 
 
 
@@ -10,13 +11,17 @@ export const create_Single_Customer = async( data : any ) => {
     
     try{
 
+        // 加上時間戳
+        data.timestamp = serverTimestamp() ;
+
+        // 新增文件
         const docRef = await addDoc( collection( firestore_db , "customers" ) , data ) ;
 
-        alert( `新增客戶成功，文件 id 為 : ${ docRef.id }` ) ;
+        toast( `新增客戶成功` ) ;
 
     }catch( err ){
 
-        alert( `刪除客戶失敗 : ${ err }` ) ;
+        toast( `新增客戶失敗 : ${ err }` ) ;
 
     }
 

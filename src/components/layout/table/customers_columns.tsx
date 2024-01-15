@@ -15,6 +15,8 @@ import {
  } from "@/components/ui/dropdown-menu"
  import { MoreHorizontal  } from "lucide-react"
  import { update_Single_Customer } from "@/api/customers/update_customers"
+ import moment from "moment";
+
 
 
 
@@ -39,6 +41,7 @@ export type Customers  = {
     customer_address   : string ;
     customer_id        : string ;
     customer_note      : string ;
+    timestamp          : any ;
     
 } ;
 
@@ -47,7 +50,7 @@ export const columns : ColumnDef< Customers >[] = [
   
     {
       accessorKey : "customer_name" ,
-      header      : "客戶姓名" ,
+      header      : () => <div className = "text-center" > 客戶姓名 </div> ,
       cell        : ( { row } ) => {
 
                         const cus = row.original ;
@@ -63,10 +66,10 @@ export const columns : ColumnDef< Customers >[] = [
 
     {
       accessorKey : "customer_sex" ,
-      header      : "客戶性別" ,
+      header      : () => <div className = "text-center" > 客戶性別 </div>  ,
       cell        : ( { row } ) => {
 
-                        return row.getValue( "customer_sex" )
+                          return <div className = "text-center" > { row.getValue( "customer_sex" ) } </div>
 
 
                        }
@@ -74,33 +77,33 @@ export const columns : ColumnDef< Customers >[] = [
 
     {
       accessorKey : "customer_mobile" ,
-      header      : "手機號碼" ,
+      header      : () => <div className = "text-center" > 手機號碼 </div>  ,
       cell        : ( { row } ) => {
 
-                        return row.getValue( "customer_mobile" )
+                        return <div className = "text-center" > { row.getValue( "customer_mobile" ) } </div>
 
                     }
     } ,
 
     {
       accessorKey : "customer_telephone" ,
-      header      : "家用電話" ,
+      header      : () => <div className = "text-center" > 家用電話 </div> ,
       cell        : ( { row } ) => {
 
-                        return row.getValue( "customer_telephone" )
+                        return <div className = "text-center" > { row.getValue( "customer_telephone" ) } </div>
 
                     }
     } ,
 
     {
       accessorKey : "customer_pets" ,
-      header      : "客戶寵物" ,
+      header      : () => <div className = "text-center" > 客戶寵物 </div> ,
      
     } ,
 
     {
       accessorKey : "customer_address" ,
-      header      : "通訊地址" ,
+      header      : () => <div className = "text-center" > 通訊地址 </div>,
       cell        : ( { row } ) => {
 
                         return row.getValue( "customer_address" )
@@ -110,14 +113,32 @@ export const columns : ColumnDef< Customers >[] = [
 
     {
       accessorKey : "customer_history" ,
-      header      : "消費歷史" ,
+      header      : () => <div className = "text-center" > 消費歷史 </div> ,
+      cell        : ({ row }) => {
+
+      
+                                
+                                    return <div className = "text-center" > 
+                                              檢視
+                                          </div> ;
+
+   }
       
     } ,
 
     {
 
-      accessorKey : "customer_created_at" ,
-      header      : "建檔日期" ,
+      accessorKey : "timestamp" ,
+      header      : () => <div className = "text-center" > 建檔日期 </div> ,
+      cell        : ({ row }) => {
+
+                                  const timestamp : any = row.getValue( "timestamp" ) ;
+                              
+                                  return <div className = "text-center" > 
+                                             {  timestamp ? moment( timestamp.toDate() ).format( 'YYYY-MM-DD' ) : "" } 
+                                         </div> ;
+
+                             }
       
     } ,
 
@@ -125,7 +146,7 @@ export const columns : ColumnDef< Customers >[] = [
    
       id     : "actions" ,
       header : "其 他" ,
-      cell   : ( { row }) => {
+      cell   : ({ row }) => {
   
                               const cus = row.original
                           

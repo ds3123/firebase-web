@@ -1,5 +1,5 @@
 import { Left_SideBar } from "./left_sidebar" 
-
+import { Toaster } from "@/components/ui/sonner";
 
 // # 系統內容樣板 : 整體
 const AdminContent_Layout = ( { children } : { children: React.ReactNode } ) => {
@@ -11,9 +11,13 @@ const AdminContent_Layout = ( { children } : { children: React.ReactNode } ) => 
              <Left_SideBar /> 
 
              { /* 右側 _ 選項內容 */ } 
-             <main className = "min-h-screen w-full" > 
+             <main className = "min-h-screen w-full" >
+
 
                 { children }
+
+                <Toaster className = "absolute left-0" />
+
 
              </main> 
              

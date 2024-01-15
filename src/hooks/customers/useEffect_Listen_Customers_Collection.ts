@@ -1,7 +1,7 @@
 
 import { useState , useEffect } from 'react' 
 import { Customers } from "@/components/layout/table/customers_columns"
-import { onSnapshot , collection } from "firebase/firestore" 
+import { onSnapshot , collection , orderBy , query } from "firebase/firestore" 
 import { firestore_db } from "@/firebase" 
 
 
@@ -15,8 +15,12 @@ export const useEffect_Listen_Customers_Collection = () : Customers[] => {
    // 監聽 customers collection
    useEffect( () => {
  
-      const unsubscribe = onSnapshot( collection( firestore_db , "customers" ) , querySnapshot => {
-     
+      // 先進行排序
+      const q = query( collection( firestore_db , "customers" ), orderBy( "timestamp" , "desc" ) );
+
+      // 取得監聽資料
+      const unsubscribe = onSnapshot( q , querySnapshot => {
+                 
                              // 取得 _ 目前 customers collection 資料
                              const customers  = querySnapshot.docs.map( doc => ( { id : doc.id , ...doc.data() } ) ) as Customers[] ;
  
