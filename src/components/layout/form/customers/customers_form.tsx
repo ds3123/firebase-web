@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select , SelectTrigger , SelectValue , SelectContent , SelectItem } from "@/components/ui/select"
 import { SheetClose } from "@/components/ui/sheet"
+import { Submit_Button } from "@layout/form/submit_button"
 
 // 建立驗證 schema
 const formSchema = z.object({
@@ -171,17 +172,7 @@ export function Customers_Form( { data , edit_func } : CustomerForm ){
                   </div>
                 
                   { /* 提交鈕 */ }
-                  <div className = "text-center" >
-
-                        { form.formState.isValid &&  
-                            <SheetClose asChild>
-                                <Button type = "submit" className = "bg-green-600" > 提交資料 </Button> 
-                            </SheetClose> 
-                         }
-                       
-                         { form.formState.isValid  || <Button type = "submit" className = "bg-red-300" > 尚未完成表單 </Button> }
-
-                  </div>
+                  <Submit_Button is_Valid = { form.formState.isValid } />
                 
               </form>
 
