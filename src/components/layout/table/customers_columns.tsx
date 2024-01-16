@@ -15,7 +15,8 @@ import {
  } from "@/components/ui/dropdown-menu"
  import { MoreHorizontal  } from "lucide-react"
  import { update_Single_Customer } from "@/api/customers/update_customers"
- import moment from "moment";
+ import moment from "moment"
+ import { update_Customer_Schema } from "@/utils/validator/customers_schema"
 
 
 
@@ -23,7 +24,9 @@ import {
 // 先輸入 document id，再回傳 _ Customers_Form 元件
 const customers_Form = ( doc_Id : string ) => ( data : any ) : JSX.Element => {
 
-   return <Customers_Form data = { data } edit_func = { ( data ) => update_Single_Customer( doc_Id , data ) }/>
+   return <Customers_Form data        = { data } 
+                          edit_func   = { ( data ) => update_Single_Customer( doc_Id , data ) }
+                          form_schema = { update_Customer_Schema } />
 
 } ;
 

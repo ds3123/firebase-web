@@ -11,40 +11,29 @@ import { Form,
          FormMessage
        } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { Select , SelectTrigger , SelectValue , SelectContent , SelectItem } from "@/components/ui/select"
-import { SheetClose } from "@/components/ui/sheet"
 import { Submit_Button } from "@layout/form/submit_button"
+import { useEffect_Query_Customers_By_Mobile } from "@/hooks/customers/useEffect_Customers_Form"
 
-// 建立驗證 schema
-const formSchema = z.object({
-                               customer_name      : z.string().min( 1 , { message: "姓名需至少輸入一個字"  } ) ,
-                               customer_sex       : z.enum( [ "男" , "女" ] ) ,
-                               customer_mobile    : z.string().min( 1 , { message: "手機號碼需至少輸入一個字"  } ) , // 再修改為驗證手機格式
-                               customer_telephone : z.string().optional() ,
-                               customer_email     : z.string().optional() ,
-                               customer_line      : z.string().optional() ,
-                               customer_address   : z.string().optional() ,
-                               customer_id        : z.string().optional() ,
-                               customer_note      : z.string().optional() ,
-                            }) ;
 
 
 type CustomerForm = {
 
-   data?     : z.infer< typeof formSchema > ;
-   edit_func : ( data : any ) => void ;  //           
+  // data?       : Customer_Shcema ;
+   data?       : any ;
+   edit_func   : ( data : any ) => void ;  // 提交後，編輯動作：新增 / 修改 
+   form_schema : any ;
 
 }
 
 
-// # 表單
-export function Customers_Form( { data , edit_func } : CustomerForm ){
+// # 客戶表單
+export function Customers_Form( { data , edit_func , form_schema } : CustomerForm ){
 
-
-    // 1. Define your form.
-    const form = useForm< z.infer< typeof formSchema > >({
-                                                            resolver      : zodResolver( formSchema ) ,
+    
+    // 初始化 RHF
+    const form = useForm< z.infer< typeof form_schema > >({
+                                                            resolver      : zodResolver( form_schema ) ,
                                                             defaultValues : data ? data : { 
                                                                                             customer_name      : "" ,
                                                                                             // customer_sex       : "" ,
@@ -57,22 +46,18 @@ export function Customers_Form( { data , edit_func } : CustomerForm ){
                                                                                             customer_note      : ""
                                                                                           }
                                                          }) ;
-    
-    // 2. Define a submit handler.
-    async function onSubmit( values : z.infer< typeof formSchema > ){
+
+    // 依手機號碼，查詢客戶是否存在                                                     
+    const { is_Customer_Existing , handle_MobileChange } = useEffect_Query_Customers_By_Mobile() ;                                                      
+   
+
+    // 提交處理                                                     
+    async function onSubmit( values : z.infer< typeof form_schema > ){
 
        edit_func( values ) ;
        
     }
 
-
-    // 變動處理：手機號碼
-    const handle_MobileChange = ( value : string ) => {
-
-        // console.log( 'TTT' , value ) ;
-    
-    } ;
-    
 
 
     return <Form { ...form } >
@@ -82,8 +67,20 @@ export function Customers_Form( { data , edit_func } : CustomerForm ){
                   { /* 欄位內容 */ }
                   <div className = "grid grid-cols-4 gap-4 p-2" >
 
+                     <FormField control = { form.control } name = "customer_mobile"
+                                render  = { ({ field }) => <FormItem className = "space-y-1" >
+                                                              <FormLabel className = "relative"> 
+                                                                <span className = "required" > * </span> 手機號碼 &nbsp; 
+                                                                { is_Customer_Existing ? <span className = "text-red-600 text-orange-400" > 此號碼 ( 客戶 ) 已存在 </span> : "" } 
+                                                              </FormLabel>
+                                                              <FormControl>
+                                                                <Input onChangeCapture = { e => handle_MobileChange( e.currentTarget.value )} placeholder = "輸入手機號碼 ( 可查詢客戶 ) " { ...field } />
+                                                              </FormControl>
+                                                              <FormMessage />
+                                                            </FormItem>  } /> 
+
                      <FormField control = { form.control } name = "customer_name"
-                                 render  = { ({ field }) => <FormItem className = "space-y-1" >
+                                 render = { ({ field }) => <FormItem className = "space-y-1" >
                                                               <FormLabel className = "relative" > 
                                                                  <span className = "required"  > * </span> 姓 名 
                                                               </FormLabel>
@@ -92,7 +89,7 @@ export function Customers_Form( { data , edit_func } : CustomerForm ){
                                                             </FormItem>  } /> 
 
                      <FormField control = { form.control } name = "customer_sex"
-                                 render  = { ({ field }) => <FormItem className = "space-y-1" >
+                                render  = { ({ field }) => <FormItem className = "space-y-1" >
 
                                                               <FormLabel className = "relative" > 
                                                                   <span className = "absolute -top-2 -left-2 text-red-600 font-extrabold"  > * </span> 性 別 
@@ -113,17 +110,6 @@ export function Customers_Form( { data , edit_func } : CustomerForm ){
                                                               <FormMessage />
 
                                                             </FormItem>  } />
-
-                     <FormField control = { form.control } name = "customer_mobile"
-                                 render  = { ({ field }) => <FormItem className = "space-y-1" >
-                                                              <FormLabel className = "relative"> 
-                                                                <span className = "required" > * </span> 手機號碼 
-                                                              </FormLabel>
-                                                              <FormControl>
-                                                                <Input onChangeCapture = { e => handle_MobileChange( e.currentTarget.value )} placeholder = "輸入手機號碼" { ...field } />
-                                                              </FormControl>
-                                                              <FormMessage />
-                                                            </FormItem>  } /> 
 
                      <FormField control = { form.control } name = "customer_telephone"
                                  render  = { ({ field }) => <FormItem className = "space-y-1" >
@@ -149,21 +135,21 @@ export function Customers_Form( { data , edit_func } : CustomerForm ){
                                                             </FormItem>  } /> 
 
                      <FormField control = { form.control } name = "customer_address"
-                                 render  = { ({ field }) => <FormItem className = "space-y-1 col-span-2" >
+                                render  = { ({ field }) => <FormItem className = "space-y-1 col-span-2" >
                                                               <FormLabel> 通訊地址 </FormLabel>
                                                               <FormControl><Input placeholder = "輸入通訊地址" { ...field } /></FormControl>
                                                               <FormMessage />
                                                             </FormItem>  } /> 
 
                      <FormField control = { form.control } name = "customer_id" 
-                                 render  = { ({ field }) => <FormItem className = "space-y-1" >
+                                 render = { ({ field }) => <FormItem className = "space-y-1" >
                                                               <FormLabel> 身份證字號 </FormLabel>
                                                               <FormControl><Input placeholder = "輸入身份證字號" { ...field } /></FormControl>
                                                               <FormMessage />
                                                             </FormItem>  } /> 
 
                      <FormField control = { form.control } name = "customer_note" 
-                                 render  = { ({ field }) => <FormItem className = "space-y-1 col-span-3" >
+                                render  = { ({ field }) => <FormItem className = "space-y-1 col-span-3" >
                                                               <FormLabel> 客戶備註 </FormLabel>
                                                               <FormControl><Input placeholder = "輸入客戶備註" { ...field } /></FormControl>
                                                               <FormMessage />
