@@ -1,4 +1,3 @@
-
 "use client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -19,7 +18,7 @@ import { useEffect_Query_Customers_By_Mobile } from "@/hooks/customers/useEffect
 
 type CustomerForm = {
 
-  // data?       : Customer_Shcema ;
+   // data?       : Customer_Shcema ;
    data?       : any ;
    edit_func   : ( data : any ) => void ;  // 提交後，編輯動作：新增 / 修改 
    form_schema : any ;
@@ -30,36 +29,35 @@ type CustomerForm = {
 // # 客戶表單
 export function Customers_Form( { data , edit_func , form_schema } : CustomerForm ){
 
-    
-    // 初始化 RHF
-    const form = useForm< z.infer< typeof form_schema > >({
-                                                            resolver      : zodResolver( form_schema ) ,
-                                                            defaultValues : data ? data : { 
-                                                                                            customer_name      : "" ,
-                                                                                            // customer_sex       : "" ,
-                                                                                            customer_mobile    : "" , 
-                                                                                            customer_telephone : "" ,
-                                                                                            customer_email     : "" ,
-                                                                                            customer_line      : "" ,
-                                                                                            customer_address   : "" ,
-                                                                                            customer_id        : "" ,
-                                                                                            customer_note      : ""
-                                                                                          }
-                                                         }) ;
+      
+      // 初始化 RHF
+      const form = useForm< z.infer< typeof form_schema > >({
+                                                               resolver      : zodResolver( form_schema ) ,
+                                                               defaultValues : data ? data : { 
+                                                                                             customer_name      : "" ,
+                                                                                             // customer_sex       : "" ,
+                                                                                             customer_mobile    : "" , 
+                                                                                             customer_telephone : "" ,
+                                                                                             customer_email     : "" ,
+                                                                                             customer_line      : "" ,
+                                                                                             customer_address   : "" ,
+                                                                                             customer_id        : "" ,
+                                                                                             customer_note      : ""
+                                                                                             }
+                                                            }) ;
 
-    // 依手機號碼，查詢客戶是否存在                                                     
-    const { is_Customer_Existing , handle_MobileChange } = useEffect_Query_Customers_By_Mobile() ;                                                      
-   
+      // 依手機號碼，查詢客戶是否存在                                                     
+      const { is_Customer_Existing , handle_MobileChange } = useEffect_Query_Customers_By_Mobile() ;                                                      
+      
 
-    // 提交處理                                                     
-    async function onSubmit( values : z.infer< typeof form_schema > ){
+      // 提交處理                                                     
+      async function onSubmit( values : z.infer< typeof form_schema > ){
 
-       edit_func( values ) ;
-       
-    }
+         edit_func( values ) ;
+         
+      }
 
-
-
+      
     return <Form { ...form } >
 
               <form onSubmit = { form.handleSubmit( onSubmit ) } className = "space-y-8" >
